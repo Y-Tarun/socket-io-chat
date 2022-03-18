@@ -1,16 +1,20 @@
 import React, { useState } from 'react';
+import { Actions } from './Actions';
 
-export const InputMessage = (emit) => {
+export const InputMessage = ({socket,userName}) => {
     let[message,setMessage]=useState("")
-const sendMessage=()=>{
-    emit(message);
+
+const onSubmit=(event)=>
+{
+    event.preventDefault();
+    Actions.EmitMessage(socket,{message,userName});
     setMessage("")
 }
 
   return <div>
-<form>
+<form onSubmit={onSubmit}>
     <input type="text" placeholder="Type your message here" value={message} onChange={(e)=>setMessage(e.target.value)}/>
-    <button type="submit" onClick={sendMessage}>Send</button>
+    <button type="submit" >Send</button>
 </form>
   </div>;
 };

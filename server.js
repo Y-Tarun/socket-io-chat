@@ -11,15 +11,22 @@ const io = new Server(server, {
 /////
 const backendPort=5000;
 /////
-io.on("connection",(socket)=>{
-    console.log(socket.id);
-    
-    socket.on('message',message=>{
-        console.log(message)
+io.on("connection",socket=>{        
+   console.log(` what is socket: ${socket}`)   
+    let user="";
+    socket.on('setUser',(username)=>{
+      user=username
+      console.log(`${user} connected`)
     })
-    socket.on("disconnect",()=>{
-        console.log("disconnected")
-    })
+   socket.on("chat", (message)=>{
+     console.log(`what is message: ${message}`)
+     io.emit("chat",message)
+   })
+   socket.on("disconnect",()=>{
+     console.log(`${user} disconnected`)
+   })
+   
+
 })
 
 
