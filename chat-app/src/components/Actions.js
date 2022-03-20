@@ -1,11 +1,13 @@
 import io from "socket.io-client";
 
 export const Actions={
-    CreateSocket:()=>{
-        const socket = io.connect("http://localhost:5000");
-        return socket;
+    
+    EmitMessage:(thisSocket,message)=>{
+        thisSocket.emit('chat',message)  
     },
-    EmitMessage:(socket,message)=>{
-        socket.emit('chat',message)  
+    SetUserName:(socket,username)=>{
+        socket.emit("setUser",username)
     }
+    
+    
 }

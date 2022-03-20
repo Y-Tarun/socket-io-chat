@@ -12,14 +12,14 @@ const io = new Server(server, {
 const backendPort=5000;
 /////
 io.on("connection",socket=>{        
-   console.log(` what is socket: ${socket}`)   
-    let user="";
-    socket.on('setUser',(username)=>{
+  let user="user";
+   console.log(` what is socket: ${socket.id}`);   
+    socket.on("setUser",(username)=>{
       user=username
       console.log(`${user} connected`)
     })
    socket.on("chat", (message)=>{
-     console.log(`what is message: ${message}`)
+     console.log(`what is message: ${message.message}`)
      io.emit("chat",message)
    })
    socket.on("disconnect",()=>{

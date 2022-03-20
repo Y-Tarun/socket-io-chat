@@ -1,40 +1,39 @@
 import {Form,Modal,Button} from 'react-bootstrap'
 import { useState } from 'react';
 
-export default function MyVerticallyCenteredModal(props) {
+export default function MyVerticallyCenteredModal() {
 
   const [name, setName] = useState("")
 
+  const onSubmitHandler=(e)=>{
+    e.preventDefault()
+    window.location.replace(`/app/${name}`)       
+        }
+  
+
   return (
-    <Modal
-      {...props}
+    <Modal show={true}      
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          Connecting Musicians
+          Connecting
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         
-        <Form>
-  <Form.Group className="mb-3" controlId="formBasicEmail">
-    <Form.Label>Enter your username to get started</Form.Label>
-    <Form.Control type="text" placeholder="Enter your username here" onChange={(event)=>{setName(event.target.value)}}/>  
-  </Form.Group>
+        <Form onSubmit={(e)=>{onSubmitHandler(e)}}>
+          <Form.Group className="mb-3 " controlId="formBasicEmail">
+              <Form.Label>Enter your username to get started</Form.Label>
+              <Form.Control required type="text" placeholder="Enter your username here" onChange={(event)=>{setName(event.target.value)}}/>  
+          </Form.Group>
 
- 
-  
+  <Button type='submit'>Submit</Button>
 </Form>
         
-      </Modal.Body>
-      <Modal.Footer>
-        <Button onClick={()=>{       
-          props.setUserName(name)
-          props.onHide()}}>Close</Button>
-      </Modal.Footer>
+      </Modal.Body>   
     </Modal>
   );
-}
+  }

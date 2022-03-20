@@ -3,12 +3,18 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-
+import { BrowserRouter,Routes,Route } from "react-router-dom";
+import MyVerticallyCenteredModal from './components/MyVerticallyCenteredModal';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  // <React.StrictMode>
+   <BrowserRouter>
+    <Routes>
+      <Route  path="/" element={<MyVerticallyCenteredModal />} />
+      <Route  path="app/:username" element={<App />} />      
+    </Routes>
+  </BrowserRouter>,
+  // </React.StrictMode>,
   document.getElementById('root')
 );
 
