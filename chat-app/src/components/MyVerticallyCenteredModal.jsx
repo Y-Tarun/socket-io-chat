@@ -17,9 +17,9 @@ export default function MyVerticallyCenteredModal() {
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
-      <Modal.Header closeButton>
+      <Modal.Header >
         <Modal.Title id="contained-modal-title-vcenter">
-          Connecting
+          Simprakash Group of Bewars
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -30,7 +30,7 @@ export default function MyVerticallyCenteredModal() {
               <Form.Control required type="text" placeholder="Enter your username here" onChange={(event)=>{setName(event.target.value)}}/>  
           </Form.Group>
 
-  <Button type='submit'>Submit</Button>
+  <Button type='submit'>Start Chatting</Button>
 </Form>
         
       </Modal.Body>   
