@@ -5,7 +5,7 @@ function ChatBubble({messageObject}) {
    
     if(sender==='you')
   return (   
-      <div className='d-flex  justify-content-end green-bubble align-self-end me-3 mb-3'>
+      <div className='d-flex  justify-content-end green-bubble align-self-end me-3 mb-3 '>
       <p className="text-right text-wrap p-3 m-0">{message}</p>    
       </div>
   )

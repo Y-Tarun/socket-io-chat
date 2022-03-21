@@ -32,8 +32,8 @@ function App() {
     setActivities([...activities,newPerson])
   })
   return (
-    <div className="appArea d-flex flex-column justify-content-end overflow-auto">
-      <div className="chatArea d-flex flex-column overflow-auto p-3">
+    <div className="appArea d-flex flex-column justify-content-end overflow-auto rounded">
+      <div className="chatArea d-flex flex-column overflow-auto p-3 ">
       {activities.map(activity=>{
         if(activity.type==="chat")
         return <ChatBubble 
@@ -48,10 +48,9 @@ function App() {
       <div className="inputArea">
       <form class="form-group" onSubmit={onSubmitHandler}>
       <input 
+      required
       type="text" 
-      class="form-control" 
-      id="exampleInputEmail1" 
-      aria-describedby="emailHelp" 
+      class="form-control"  
       placeholder="Message"
       value={message} 
       onChange={(e)=>setMessage(e.target.value)}
