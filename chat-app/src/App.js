@@ -1,50 +1,52 @@
-import { InputMessage } from './components/InputMessage';
-import { Actions } from './components/Actions';
 import { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import { Container, Row, Col } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import { socket } from './SocketService';
-import io from "socket.io-client";
-import { Button,Input } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import ChatBubble from './components/ChatBubble';
+import { nanoid } from 'nanoid';
+
 
 
 function App() {
   let {username}=useParams()
-  
-  console.log("connection made")
+  const [activities, setActivities] = useState([])
+  let[message,setMessage]=useState("")
+   
   useEffect(() => {    
     
     socket.emit("setUser",username)      
   }, [])
-  const [chats, setChats] = useState([])
-  let[message,setMessage]=useState("")
   socket.on("chat", message=>{
-    setChats([...chats,message])
+    setActivities([...activities,message])
     })
 
-  const onClickHandler = () => {  
-    socket.emit("chat",{message,username})   
+  const onSubmitHandler = (event) => {  
+    event.preventDefault();
+    socket.emit("chat",{message,username,id:nanoid(),type:"chat"})   
       setMessage("")
-  }
+  } 
+
+  socket.on("newUserJoined",(newPerson)=>{
+    setActivities([...activities,newPerson])
+  })
   return (
     <div className="appArea d-flex flex-column justify-content-end overflow-auto">
       <div className="chatArea d-flex flex-column overflow-auto p-3">
-      {chats.map(chat=>{
+      {activities.map(activity=>{
+        if(activity.type==="chat")
         return <ChatBubble 
-        key={(Math.random() + 1).toString(36).substring(7)}
-        messageObject={{message: chat.message, 
-                        username: chat.username, 
-                        sender:chat.username===username?'you':'not-you'}}
+        key={activity.id}
+        messageObject={{message: activity.message, 
+                        username: activity.username, 
+                        sender:activity.username===username?'you':'not-you'}}
         />
-             
-      
+        return <p key= {activity.id}>{activity.message}</p>      
       })}
       </div>
       <div className="inputArea">
-      <div class="form-group">
+      <form class="form-group" onSubmit={onSubmitHandler}>
       <input 
       type="text" 
       class="form-control" 
@@ -54,9 +56,8 @@ function App() {
       value={message} 
       onChange={(e)=>setMessage(e.target.value)}
       />
-      </div>
-      {/* <Input type="text" placeholder='type ur message here'  value={message} onChange={(e)=>setMessage(e.target.value)}/> */}
-      <Button onClick={()=>onClickHandler()} >Send</Button>
+      <Button type='submit' >Send</Button>
+      </form>
       </div>
     </div>
   )
