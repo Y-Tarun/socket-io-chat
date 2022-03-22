@@ -11,7 +11,7 @@ ReactDOM.render(
    <BrowserRouter>
     <Routes>
       <Route  path="/" element={<MyVerticallyCenteredModal />} />
-      <Route  path="app/:username" element={<App />} />      
+      <Route  path="app/:username&:id" element={<App />} />      
     </Routes>
   </BrowserRouter>,
   // </React.StrictMode>,

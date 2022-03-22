@@ -10,37 +10,42 @@ import { nanoid } from 'nanoid';
 
 
 function App() {
-  let {username}=useParams()
+  let {username,id}=useParams()
+  let userDto= {
+    username,
+    id
+  }
   const [activities, setActivities] = useState([])
   let[message,setMessage]=useState("")
    
-  useEffect(() => {    
-    
-    socket.emit("setUser",username)      
+  useEffect(() => {
+    socket.emit("setUser",userDto)      
   }, [])
+
   socket.on("chat", message=>{
     setActivities([...activities,message])
     })
 
   const onSubmitHandler = (event) => {  
     event.preventDefault();
-    socket.emit("chat",{message,username,id:nanoid(),type:"chat"})   
+    socket.emit("chat",{message,userDto,id:nanoid(),type:"chat"})   
       setMessage("")
   } 
 
   socket.on("newUserJoined",(newPerson)=>{
     setActivities([...activities,newPerson])
   })
+
   return (
     <div className="appArea d-flex flex-column justify-content-end overflow-auto rounded">
       <div className="chatArea d-flex flex-column overflow-auto p-3 ">
       {activities.map(activity=>{
-        if(activity.type==="chat")
+        if(activity.type==="chat")        
         return <ChatBubble 
         key={activity.id}
         messageObject={{message: activity.message, 
-                        username: activity.username, 
-                        sender:activity.username===username?'you':'not-you'}}
+                        username: activity.userDto.username, 
+                        sender:activity.userDto.id===userDto.id?'you':'not-you'}}
         />
         return <p key= {activity.id}>{activity.message}</p>      
       })}

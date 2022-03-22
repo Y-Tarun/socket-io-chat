@@ -1,13 +1,24 @@
-import {Form,Modal,Button} from 'react-bootstrap'
+import {Form,Modal,Button, InputGroup} from 'react-bootstrap'
 import { useState } from 'react';
+import { nanoid } from 'nanoid';
+
 
 export default function MyVerticallyCenteredModal() {
 
   const [name, setName] = useState("")
+  const [validated, setValidated] = useState(false);
 
-  const onSubmitHandler=(e)=>{
-    e.preventDefault()
-    window.location.replace(`/app/${name}`)       
+  const onSubmitHandler=(event)=>{
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    setValidated(true);
+
+    event.preventDefault()
+    if (form.checkValidity() === true)
+    window.location.replace(`/app/${name}&${nanoid()}`)       
         }
   
 
@@ -24,13 +35,24 @@ export default function MyVerticallyCenteredModal() {
       </Modal.Header>
       <Modal.Body>
         
-        <Form onSubmit={(e)=>{onSubmitHandler(e)}}>
+        <Form noValidate validated={validated} onSubmit={(e)=>{onSubmitHandler(e)}} >
+        <InputGroup hasValidation>        
           <Form.Group className="mb-3 " controlId="formBasicEmail">
               <Form.Label>Enter your username to get started</Form.Label>
-              <Form.Control required type="text" placeholder="Enter your username here" onChange={(event)=>{setName(event.target.value)}}/>  
+              <Form.Control 
+              required 
+              type="text" 
+              placeholder="Enter your username here" 
+              onChange={(event)=>{setName(event.target.value)}}
+              data-error-msg="Must enter your name?"
+              />  
           </Form.Group>
+          <Form.Control.Feedback type="invalid">
+              Please choose a username.
+            </Form.Control.Feedback>
+            </InputGroup>
 
-  <Button type='submit'>Start Chatting</Button>
+              <Button type='submit'>Start Chatting</Button>
 </Form>
         
       </Modal.Body>   

@@ -20,11 +20,11 @@ io.on("connection",socket=>{
     let user="user";
     console.log(` what is socket: ${socket.id}`);
 
-    socket.on("setUser",(username)=>{
-      user=username
+    socket.on("setUser",(userDto)=>{
+      user=userDto.username
       console.log(`${user} connected`)
       // io.to(socket.id).emit("newUserJoined",({type:"newUserJoined",message:`Hi ${username}!!!`}) );
-      socket.broadcast.emit("newUserJoined",({type:"newUserJoined",message:`say Hi to ${username} ...`,id:nanoid()}))
+      socket.broadcast.emit("newUserJoined",({type:"newUserJoined",message:`say Hi to ${userDto.username} ...`,id:nanoid()}))
 
     })
 
@@ -32,7 +32,7 @@ io.on("connection",socket=>{
 
 
    socket.on("chat", (message)=>{
-     console.log(`${message.username} sent ${message.message}. messageId is --${message.id}`)
+     console.log(`${message.userDto.username} of id ${message.userDto.id}  sent ${message.message}. messageId is --${message.id}`)
      io.emit("chat",message)
    })
 
