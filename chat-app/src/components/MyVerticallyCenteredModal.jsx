@@ -30,12 +30,12 @@ export default function MyVerticallyCenteredModal() {
     >
       <Modal.Header >
         <Modal.Title id="contained-modal-title-vcenter">
-          Simprakash Group of Bewars
+          Happy Birthday Bloody
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         
-        <Form noValidate validated={validated} onSubmit={(e)=>{onSubmitHandler(e)}} >
+        {/* <Form noValidate validated={validated} onSubmit={(e)=>{onSubmitHandler(e)}} >
         <InputGroup hasValidation>        
           <Form.Group className="mb-3 " controlId="formBasicEmail">
               <Form.Label>Enter your username to get started</Form.Label>
@@ -53,7 +53,7 @@ export default function MyVerticallyCenteredModal() {
             </InputGroup>
 
               <Button type='submit'>Start Chatting</Button>
-</Form>
+</Form> */}
         
       </Modal.Body>   
     </Modal>
